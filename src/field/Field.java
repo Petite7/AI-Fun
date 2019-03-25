@@ -1,0 +1,36 @@
+package field;
+
+import cell.*;
+
+public class Field {
+	private int width;
+	private int height;
+	private Cell[][] field;
+	
+	public Field(int theWidth, int theHeight) {
+		this.width = theWidth;
+		this.height = theHeight;
+		
+		field = new Cell[this.width][this.height];
+	}
+	
+	public int getWidth() {return this.width;}
+	public int getHeight() {return this.height;}
+	
+	public Cell place(int x, int y, Cell o) {
+		Cell prev = field[x][y];
+		field[x][y] = o;
+		return prev;
+	}
+	
+	public Cell get(int x, int y) {
+		return field[x][y];
+	}
+	
+	public void clear() {
+		for(int i = 0; i < this.height; i++)
+			for(int j = 0; j < this.width; j++)
+				field[i][j] = null;
+		//GC Automatically collect space...
+	}
+}
