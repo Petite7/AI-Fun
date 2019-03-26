@@ -11,3 +11,10 @@ Current Class:
    
    View : Java Graphics Class showing the perspective of Field
    
+   package: game
+   		Action : Character Move Actions
+   		ActionRes : Possible Results When Character Take Actions
+   		CharacterMove : Character Move Utils
+   		Pstatus & Player : Player and Player Status
+   		GameManager : TODO -> Manage Game 
+   
