@@ -26,28 +26,38 @@ public class Cell {
 				break;
 			}
 			case STAR : {
-				Image img = new ImageIcon("star.jpg").getImage();
+				Image img = new ImageIcon("pic/star.jpg").getImage();
 				g.drawImage(img, x, y, size, size, null);
 				break;
 			}
 			case SUP_STAR : {
-				Image img = new ImageIcon("sup.jpg").getImage();
+				Image img = new ImageIcon("pic/sup.jpg").getImage();
 				g.drawImage(img, x, y, size, size, null);
 				break;
 			}
 			case PLAYER1 : {
-				Image img = new ImageIcon("p1.jpg").getImage();
+				Image img = new ImageIcon("pic/p1.jpg").getImage();
 				g.drawImage(img, x, y, size, size, null);
 				break;
 			}
 			case PLAYER2 : {
-				Image img = new ImageIcon("p2.jpg").getImage();
+				Image img = new ImageIcon("pic/p2.jpg").getImage();
 				g.drawImage(img, x, y, size, size, null);
 				break;
 			}
 			case MONSTER : {
-				Image img = new ImageIcon("mons.jpg").getImage();
+				Image img = new ImageIcon("pic/mons.jpg").getImage();
 				g.drawImage(img, x, y, size, size, null);
+				break;
+			}
+			case SUPER_PLAYER : {
+				Image img = new ImageIcon("pic/super.jpg").getImage();
+				g.drawImage(img, x, y, size, size, null);
+				break;
+			}
+			case WALL : {
+				g.drawRect(x, y, size, size);
+				g.fillRect(x, y, size, size);
 				break;
 			}
 			default : {

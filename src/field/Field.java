@@ -27,6 +27,10 @@ public class Field {
 		return field[x][y];
 	}
 	
+	public boolean outOfBound(int x, int y) {
+		return (x < 0 || x >= height || y < 0 || y >= width);
+	}
+	
 	public void clear() {
 		for(int i = 0; i < this.height; i++)
 			for(int j = 0; j < this.width; j++)

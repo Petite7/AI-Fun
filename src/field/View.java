@@ -3,6 +3,8 @@ package field;
 import cell.*;
 import java.awt.Dimension;
 import java.awt.Graphics;
+
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class View extends JPanel {
