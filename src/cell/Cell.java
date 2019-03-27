@@ -11,14 +11,17 @@ public class Cell {
 	public Cell() {}
 	public Cell(BlockType type) {this.blockType = type;}
 	
+	//往cell中添加类型
 	public void cellFill(BlockType type) {
 		this.blockType = type;
 	}
 	
+	//返回cell中的类型
 	public BlockType cellType() {
 		return this.blockType;
 	}
 	
+	//绘制本cell内的元素
 	public void draw(Graphics g, int x, int y, int size) {
 		switch(this.blockType) {
 			case EMPTY : {

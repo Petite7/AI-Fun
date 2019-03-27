@@ -33,20 +33,20 @@ public class View extends JPanel {
 		return new Dimension(field.getWidth()*GRID_SIZE+1, field.getHeight()*GRID_SIZE+1);
 	}
 	
-//	public static void main(String[] args) {
-//		Field field = new Field(10,10);
-//		for ( int row = 0; row<field.getHeight(); row++ ) {
-//			for ( int col = 0; col<field.getWidth(); col++ ) {
-//				field.place(row, col, new Cell(BlockType.SUP_STAR));
-//			}
-//		}
-//		View view = new View(field);
-//		JFrame frame = new JFrame();
-//		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		frame.setResizable(false);
-//		frame.setTitle("Cells");
-//		frame.add(view);
-//		frame.pack();
-//		frame.setVisible(true);
-//	}
+	public static void main(String[] args) {
+		Field field = new Field(20,20);
+		for ( int row = 0; row<field.getHeight(); row++ ) {
+			for ( int col = 0; col<field.getWidth(); col++ ) {
+				field.place(row, col, new Cell(BlockType.SUP_STAR));
+			}
+		}
+		View view = new View(field);
+		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setResizable(false);
+		frame.setTitle("Cells");
+		frame.add(view);
+		frame.pack();
+		frame.setVisible(true);
+	}
 }
