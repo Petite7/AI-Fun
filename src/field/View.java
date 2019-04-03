@@ -1,19 +1,46 @@
 package field;
 
 import cell.*;
+
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.Random;
 
+import javax.naming.InitialContext;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class View extends JPanel {
 	private static final long serialVersionUID = 23333333L;
-	private static final int GRID_SIZE = 16;
+	private static final int GRID_SIZE =30;
 	private Field field;
 	
-	public View(Field theField) {
+	
+	
+	public void initial(Field theField) {
 		this.field = theField;
+		Random rand=new Random();
+		int[][] num=new int[field.getWidth()][field.getHeight()];
+		for ( int row = 0; row<field.getWidth(); row++ ) {
+			for ( int col = 0; col<field.getHeight(); col++ ) {
+				num[row][col]=rand.nextInt(4);
+				switch (num[row][col]) {
+				case 1:
+					field.place(row, col, new Cell(BlockType.STAR));
+					break;
+				case 2:
+					field.place(row, col, new Cell(BlockType.EMPTY));
+					break;
+				case 3:
+					field.place(row, col, new Cell(BlockType.SUP_STAR));
+					break;
+				case 0:
+					field.place(row, col, new Cell(BlockType.WALL));
+				default:
+					break;
+				}
+			}
+		}
 	}
 	
 	@Override
@@ -33,20 +60,4 @@ public class View extends JPanel {
 		return new Dimension(field.getWidth()*GRID_SIZE+1, field.getHeight()*GRID_SIZE+1);
 	}
 	
-	public static void main(String[] args) {
-		Field field = new Field(20,20);
-		for ( int row = 0; row<field.getHeight(); row++ ) {
-			for ( int col = 0; col<field.getWidth(); col++ ) {
-				field.place(row, col, new Cell(BlockType.SUP_STAR));
-			}
-		}
-		View view = new View(field);
-		JFrame frame = new JFrame();
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-		frame.setTitle("Cells");
-		frame.add(view);
-		frame.pack();
-		frame.setVisible(true);
-	}
 }

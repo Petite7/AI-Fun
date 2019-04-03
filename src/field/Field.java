@@ -22,6 +22,10 @@ public class Field {
 		field[x][y] = o;
 		return prev;
 	}
+	public void setCell(int x, int y, Cell o) {
+		Cell prev = field[x][y];
+		field[x][y] = o;
+	}
 	
 	//获取[x,y]处cell内的元素类型
 	public Cell get(int x, int y) {

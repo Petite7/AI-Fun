@@ -13,8 +13,6 @@ public class CharacterMove {
 	public static int  outofbound=-10;
 	
 	public static ActionRes action(Field theField, int x, int y, Action action) {
-		//TODO : Multiple actions ...
-		
 		int nowX = x;
 		int nowY = y;
 		Field nowField = theField;
@@ -42,9 +40,8 @@ public class CharacterMove {
 		
 		BlockType moveType = nowField.get(x, y).cellType();
 		BlockType destType = nowField.get(nowX, nowY).cellType();
-		nowField.place(x, y, new Cell(BlockType.EMPTY));
-		
 		boolean out=nowField.outOfBound(nowX, nowY);
+		
 		if(!out) {
 			switch(destType) {
 			case STAR : {
@@ -63,17 +60,20 @@ public class CharacterMove {
 					
 			}
 			case WALL : {
+				//Field在[nowX,nowY]不变
 				return new ActionRes(nowField, BlockType.EMPTY, hitWall);
 			}
 			case MONSTER : {
 				if(moveType == BlockType.SUPER_PLAYER) {
 					nowField.place(nowX, nowY, new Cell(BlockType.SUPER_PLAYER));
-					return new ActionRes(nowField,BlockType.EMPTY,gotKilled);
+					return new ActionRes(nowField,BlockType.SUPER_PLAYER,gotKilled);
 				}
 				else if(moveType == BlockType.MONSTER) {
+					//Field在[nowX,nowY]不变
 					return new ActionRes(nowField,moveType,0);
 				}
 				else {
+					//Field在[nowX,nowY]不变
 					return new ActionRes(nowField,BlockType.EMPTY, gotKilled);
 				}
 					
@@ -81,10 +81,10 @@ public class CharacterMove {
 			case PLAYER1 : {
 				if(moveType==BlockType.MONSTER) {
 					nowField.place(nowX, nowY, new Cell(BlockType.MONSTER));
-					return new ActionRes(nowField,BlockType.EMPTY,killplayer);
+					return new ActionRes(nowField,BlockType.MONSTER,killplayer);
 				}
 				else{
-					nowField.place(nowX, nowY, new Cell(moveType));
+					nowField.place(nowX, nowY, new Cell(moveType));//两个player在用一个cell如何修改
 					return new ActionRes(nowField,moveType,0);
 				}
 					
@@ -92,7 +92,7 @@ public class CharacterMove {
 			case PLAYER2:{
 				if(moveType==BlockType.MONSTER) {
 					nowField.place(nowX, nowY, new Cell(BlockType.MONSTER));
-					return new ActionRes(nowField,BlockType.EMPTY,killplayer);
+					return new ActionRes(nowField,BlockType.MONSTER,killplayer);
 				}
 				else {
 					nowField.place(nowX, nowY, new Cell(moveType));
@@ -102,7 +102,7 @@ public class CharacterMove {
 			}
 			case SUPER_PLAYER:{
 				if(moveType==BlockType.MONSTER) {
-					nowField.place(nowX, nowY, new Cell(BlockType.SUPER_PLAYER));
+					//Field在[nowX,nowY]不变
 					return new ActionRes(nowField,BlockType.EMPTY, killMonster);
 				}
 				else {
