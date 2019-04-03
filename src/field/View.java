@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Random;
 
-import javax.naming.InitialContext;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class View extends JPanel {
@@ -17,7 +15,7 @@ public class View extends JPanel {
 	
 	
 	
-	public void initial(Field theField) {
+	public void Initial(Field theField) {
 		this.field = theField;
 		Random rand=new Random();
 		int[][] num=new int[field.getWidth()][field.getHeight()];

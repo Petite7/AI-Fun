@@ -15,7 +15,7 @@ public class GameManager {
 	}
 	
 	public void Initial() {
-		this.view.initial(gameField);
+		this.view.Initial(gameField);
 		//初始化 角色位置
 		Random ran=new Random();
 		int[] h={0,0,0};
@@ -46,7 +46,7 @@ public class GameManager {
 		gameField.setCell(w[0], h[0], new Cell(BlockType.MONSTER));
 	}
 
-	//游戏回合进行 
+	//游戏huih
 	public void gameloop() {
 		ActionRes[] actions=new ActionRes[3];
 		boolean over=false;
