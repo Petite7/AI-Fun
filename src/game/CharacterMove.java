@@ -5,17 +5,12 @@ import cell.*;
 
 public class CharacterMove {
 	
-	public static int scoreStar = 10;
-	public static int hitWall = -400;
-	public static int gotKilled = -1;
-	
 	public static ActionRes action(Field theField, int x, int y, Action action) {
-		//TODO : Multiple actions ...
-		
 		int nowX = x;
 		int nowY = y;
 		Field nowField = theField;
 		
+		//Current Character Location Move
 		switch(action) {
 			case MOVE_LEFT : {
 				nowY --;
@@ -39,30 +34,82 @@ public class CharacterMove {
 		BlockType moveType = nowField.get(x, y).cellType();
 		BlockType destType = nowField.get(nowX, nowY).cellType();
 		
-		switch(destType) {
-			case STAR : {
-				return new ActionRes(nowField, moveType, scoreStar);
+		//Current Character Move Result Set
+		nowField.place(x, y, new Cell(BlockType.EMPTY));
+		
+		if(!nowField.outOfBound(nowX, nowY)) {
+			switch(destType) {
+				case STAR : {
+					nowField.place(nowX, nowY, new Cell(moveType));
+					return new ActionRes(nowField, moveType, Result.SCORE_NORMAL);
+				}
+				case SUP_STAR : {
+					if(moveType == BlockType.MONSTER) {
+						nowField.place(nowX, nowY, new Cell(moveType));
+						return new ActionRes(nowField, moveType, Result.SCORE_SUPER);
+					} else {
+						nowField.place(nowX, nowY, new Cell(BlockType.SUPER_PLAYER));
+						return new ActionRes(nowField, BlockType.SUPER_PLAYER, Result.SCORE_SUPER);
+					}
+						
+				}
+				case WALL : {
+					return new ActionRes(nowField, BlockType.EMPTY, Result.DEAD_HITWALL);
+				}
+				case MONSTER : {
+					if(moveType == BlockType.SUPER_PLAYER) {
+						nowField.place(nowX, nowY, new Cell(moveType));
+						return new ActionRes(nowField, moveType, Result.SCORE_KILLM);
+					} else if(moveType == BlockType.MONSTER) {
+						return new ActionRes(nowField, moveType, Result.NONE);
+					} else {
+						return new ActionRes(nowField, BlockType.EMPTY, Result.DEAD_MONSTER);
+					}
+						
+				}
+				case PLAYER1 : {
+					if(moveType == BlockType.MONSTER) {
+						nowField.place(nowX, nowY, new Cell(moveType));
+						return new ActionRes(nowField, moveType, Result.SCORE_KILLP);
+					} else if(moveType == BlockType.SUPER_PLAYER) {
+						nowField.place(nowX, nowY, new Cell(moveType));
+						return new ActionRes(nowField, moveType, Result.SCORE_KILLP);
+					} else {
+						nowField.place(nowX, nowY, new Cell(moveType));
+						return new ActionRes(nowField, moveType, Result.NONE);
+					}
+						
+				}
+				case PLAYER2:{
+					if(moveType == BlockType.MONSTER) {
+						nowField.place(nowX, nowY, new Cell(moveType));
+						return new ActionRes(nowField, moveType, Result.SCORE_KILLP);
+					} else if(moveType == BlockType.SUPER_PLAYER) {
+						nowField.place(nowX, nowY, new Cell(moveType));
+						return new ActionRes(nowField, moveType, Result.SCORE_KILLP);
+					} else {
+						nowField.place(nowX, nowY, new Cell(moveType));
+						return new ActionRes(nowField, moveType, Result.NONE);
+					}
+				}
+				case SUPER_PLAYER:{
+					if(moveType==BlockType.MONSTER) {
+						return new ActionRes(nowField,BlockType.EMPTY, Result.DEAD_PLAYER);
+					} else if(moveType == BlockType.PLAYER1 || moveType == BlockType.PLAYER2) {
+						return new ActionRes(nowField,BlockType.MONSTER, Result.DEAD_PLAYER);
+					} else {
+						nowField.place(nowX, nowY, new Cell(moveType));
+						return new ActionRes(nowField, moveType, Result.NONE);
+					}
+				}
+				default : {
+					nowField.place(nowX, nowY, new Cell(moveType));
+					return new ActionRes(nowField, moveType, Result.NONE);
+				}
 			}
-			case SUP_STAR : {
-				if(moveType == BlockType.MONSTER)
-					return new ActionRes(nowField, moveType, scoreStar * 5);
-				else 
-					return new ActionRes(nowField, BlockType.SUPER_PLAYER, scoreStar * 5);
-			}
-			case WALL : {
-				return new ActionRes(nowField, BlockType.EMPTY, hitWall);
-			}
-			case MONSTER : {
-				return new ActionRes(nowField, BlockType.EMPTY, gotKilled);
-			}
-			case PLAYER1 : {
-				//TODO : do it tomorrow
-			}
-			default : {
-				return new ActionRes(nowField, moveType, 0);
-			}
+		} else {
+			return new ActionRes(nowField, BlockType.EMPTY, Result.DEAD_OUT);
 		}
-
 	}
 	
 }

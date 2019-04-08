@@ -6,11 +6,11 @@ import cell.*;
 public class ActionRes {
 	public Field afterMove;
 	public BlockType afterAction;
-	public int gainScore;
+	public Result result;
 	
-	public ActionRes(Field theField, BlockType theType, int theScore) {
+	public ActionRes(Field theField, BlockType theType, Result theResult) {
 		this.afterMove = theField;
 		this.afterAction = theType;
-		this.gainScore = theScore;
+		this.result = theResult;
 	}
 }
