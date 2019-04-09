@@ -21,7 +21,8 @@ public class View extends JPanel {
 		super.paint(g);
 		for(int i = 0; i < field.getHeight(); i++) {
 			for(int j = 0; j < field.getWidth(); j++) {
-				Cell now = field.get(i, j);
+				int top = field.get(i, j).size();
+				Cell now = field.get(i, j).get(top - 1);
 				if(now != null) 
 					now.draw(g, i*GRID_SIZE, j*GRID_SIZE, GRID_SIZE);
 			}

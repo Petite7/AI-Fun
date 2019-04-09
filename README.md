@@ -1,7 +1,15 @@
 # AI-Fun
 A Java Project inspired by a Algorithm Competition. Created just for fun.
 
-Basiec Class
+MAJOR UPDATE --- 19/4/9
+
+   + Multiple Players Allowed, More Than 2 Players Is Allowed
+   
+   + Multiple Types In One Cell Allowed
+   
+   + Character Move Class Updated For The Cases Above
+
+Basic Class
 
    + Cell : Basic Class for cell nuit
    
@@ -16,11 +24,13 @@ package: game
    + Action : Character Move Actions
    		
    + ActionRes : Possible Results When Character Take Actions
+   
+   + Result : Enum Class For Results After Character Moved
    		
-   + CharacterMove : Character Move Utils
+   + CharacterMove : Character Move Utilities
    		
    + Pstatus & Player : Player and Player Status
    		
-   + GameManager : TODO -> Manage Game 
+   + GameManager : TODO -> Player Location Initialize, Game Loop
    		
    

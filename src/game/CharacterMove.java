@@ -5,51 +5,58 @@ import cell.*;
 
 public class CharacterMove {
 	
-	public static ActionRes action(Field theField, int x, int y, Action action) {
+	public static ActionRes action(Field nowField, int x, int y, String name, Action action) {
 		int nowX = x;
 		int nowY = y;
-		Field nowField = theField;
+		
+		//Get Current Move Index
+		int mover = 0;
+		while(mover < nowField.get(x, y).size() && !nowField.get(x, y).get(mover).equals(name))
+			mover ++;
 		
 		//Current Character Location Move
 		switch(action) {
-			case MOVE_LEFT : {
+			case MOVE_LEFT : 
 				nowY --;
 				break;
-			}
-			case MOVE_RIGHT : {
+			case MOVE_RIGHT : 
 				nowY ++;
 				break;
-			}
-			case MOVE_UP : {
+			case MOVE_UP :
 				nowX --;
 				break;
-			}
-			case MOVE_DOWN : {
+			case MOVE_DOWN :
 				nowX ++;
 				break;
-			}
 			default : break;
 		}
 		
 		
 		
 		if(!nowField.outOfBound(nowX, nowY)) {
-			BlockType moveType = nowField.get(x, y).cellType();
-			BlockType destType = nowField.get(nowX, nowY).cellType();
+			BlockType moveType = nowField.get(x, y).get(mover).getBlockType();
+			BlockType destType = nowField.get(nowX, nowY).get(0).getBlockType();
+			
+			Cell origin = nowField.get(x, y).get(mover);
 			
 			//Current Character Move Result Set
-			nowField.place(x, y, new Cell(BlockType.EMPTY));
+			if(nowField.get(x, y).size() > 1)
+				nowField.get(x, y).remove(mover);
+			else
+				nowField.replace(x, y, new Cell(BlockType.EMPTY));
+			
 			switch(destType) {
 				case STAR : {
-					nowField.place(nowX, nowY, new Cell(moveType));
+					nowField.replace(nowX, nowY, origin);
 					return new ActionRes(nowField, moveType, Result.SCORE_NORMAL);
 				}
 				case SUP_STAR : {
-					if(moveType.equals(BlockType.MONSTER)) {
-						nowField.place(nowX, nowY, new Cell(moveType));
+					if(moveType == BlockType.MONSTER) {
+						nowField.replace(nowX, nowY, origin);
 						return new ActionRes(nowField, BlockType.MONSTER, Result.SCORE_SUPER);
 					} else {
-						nowField.place(nowX, nowY, new Cell(BlockType.SUPER_PLAYER));
+						origin.setBlockType(BlockType.SUPER_PLAYER);
+						nowField.replace(nowX, nowY, origin);
 						return new ActionRes(nowField, BlockType.SUPER_PLAYER, Result.SCORE_SUPER);
 					}
 						
@@ -58,53 +65,42 @@ public class CharacterMove {
 					return new ActionRes(nowField, BlockType.EMPTY, Result.DEAD_HITWALL);
 				}
 				case MONSTER : {
-					if(moveType.equals(BlockType.SUPER_PLAYER)) {
-						nowField.place(nowX, nowY, new Cell(moveType));
+					if(moveType == BlockType.SUPER_PLAYER) {
+						nowField.replace(nowX, nowY, origin);
 						return new ActionRes(nowField, moveType, Result.SCORE_KILLM);
 					} else if(moveType == BlockType.MONSTER) {
+						nowField.place(nowX, nowY, origin);
 						return new ActionRes(nowField, moveType, Result.NONE);
 					} else {
 						return new ActionRes(nowField, BlockType.EMPTY, Result.DEAD_MONSTER);
 					}
 						
 				}
-				case PLAYER1 : {
+				case PLAYER : {
 					if(moveType == BlockType.MONSTER) {
-						nowField.place(nowX, nowY, new Cell(moveType));
+						nowField.replace(nowX, nowY, origin);
 						return new ActionRes(nowField, moveType, Result.SCORE_KILLP);
 					} else if(moveType == BlockType.SUPER_PLAYER) {
-						nowField.place(nowX, nowY, new Cell(moveType));
+						nowField.replace(nowX, nowY, origin);
 						return new ActionRes(nowField, moveType, Result.SCORE_KILLP);
 					} else {
-						nowField.place(nowX, nowY, new Cell(moveType));
+						nowField.place(nowX, nowY, origin);
 						return new ActionRes(nowField, moveType, Result.NONE);
 					}
 						
 				}
-				case PLAYER2:{
-					if(moveType == BlockType.MONSTER) {
-						nowField.place(nowX, nowY, new Cell(moveType));
-						return new ActionRes(nowField, moveType, Result.SCORE_KILLP);
-					} else if(moveType == BlockType.SUPER_PLAYER) {
-						nowField.place(nowX, nowY, new Cell(moveType));
-						return new ActionRes(nowField, moveType, Result.SCORE_KILLP);
-					} else {
-						nowField.place(nowX, nowY, new Cell(moveType));
-						return new ActionRes(nowField, moveType, Result.NONE);
-					}
-				}
 				case SUPER_PLAYER:{
-					if(moveType==BlockType.MONSTER) {
+					if(moveType == BlockType.MONSTER) {
 						return new ActionRes(nowField,BlockType.EMPTY, Result.DEAD_PLAYER);
-					} else if(moveType == BlockType.PLAYER1 || moveType == BlockType.PLAYER2) {
+					} else if(moveType == BlockType.PLAYER) {
 						return new ActionRes(nowField,BlockType.EMPTY, Result.DEAD_PLAYER);
 					} else {
-						nowField.place(nowX, nowY, new Cell(moveType));
+						nowField.place(nowX, nowY, origin);
 						return new ActionRes(nowField, moveType, Result.NONE);
 					}
 				}
 				default : {
-					nowField.place(nowX, nowY, new Cell(moveType));
+					nowField.replace(nowX, nowY, origin);
 					return new ActionRes(nowField, moveType, Result.NONE);
 				}
 			}
@@ -112,6 +108,7 @@ public class CharacterMove {
 			return new ActionRes(nowField, BlockType.EMPTY, Result.DEAD_OUT);
 		}
 	}
+	
 //	public static void  main(String[] args) {
 //		Field field=new Field(2,1);
 //		Cell[] movers= {new Cell(BlockType.PLAYER1),new Cell(BlockType.PLAYER2),
@@ -155,4 +152,5 @@ public class CharacterMove {
 //		}
 //
 //	}
+	
 }
