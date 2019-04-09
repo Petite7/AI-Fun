@@ -7,11 +7,11 @@ public class Field {
 	private int height;
 	private Cell[][] field;
 	
-	public Field(int theWidth, int theHeight) {
-		this.width = theWidth;
+	public Field(int theHeight, int theWidth) {
 		this.height = theHeight;
+		this.width = theWidth;
 		
-		field = new Cell[this.width][this.height];
+		field = new Cell[this.height][this.width];
 	}
 	
 	public int getWidth() {return this.width;}
