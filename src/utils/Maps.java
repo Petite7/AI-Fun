@@ -37,7 +37,7 @@ public class Maps {
 		for(int i = 0; i < smap.size(); i ++) {
 			String line = smap.get(i);
 			for(int j = 0; j < line.length(); j ++) {
-				ret.place(i, j, new Cell(BlockType.values()[line.charAt(j) - '0']));
+				ret.replace(i, j, new Cell(BlockType.values()[line.charAt(j) - '0']));
 			}
 		}
 		
