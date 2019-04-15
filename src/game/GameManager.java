@@ -127,6 +127,7 @@ public class GameManager {
 	}
 	
 	private void nextRound() {
+		
 		for(int i = 0; i < this.playerGroup.size(); i++) {
 			
 			Player now = this.playerGroup.get(i);

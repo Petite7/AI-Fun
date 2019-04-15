@@ -13,6 +13,8 @@ public class Field {
 		this.height = theHeight;
 		this.width = theWidth;
 		
+		field = new ArrayList[this.height][this.width];
+		
 		for(int i = 0; i < this.height; i++)
 			for(int j = 0; j < this.width; j++)
 				field[i][j] = new ArrayList<Cell>();
