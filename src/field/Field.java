@@ -18,8 +18,18 @@ public class Field {
 				field[i][j] = new ArrayList<Cell>();
 	}
 	
+	public Field(Field theField) {
+		this.width = theField.getWidth();
+		this.height = theField.getHeight();
+		this.field = theField.get();
+	}
+	
 	public int getWidth() {return this.width;}
 	public int getHeight() {return this.height;}
+	
+	public ArrayList<Cell>[][] get() {
+		return this.field;
+	}
 	
 	public void place(int x, int y, Cell o) {
 		field[x][y].add(o);

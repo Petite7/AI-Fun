@@ -1,17 +1,18 @@
 package game;
 
 import field.*;
+import utils.Pair;
 import cell.*;
 
 public class CharacterMove {
 	
-	public static ActionRes action(Field nowField, int x, int y, String name, Action action) {
+	public static ActionRes action(Field nowField, int x, int y, int pid, Action action) {
 		int nowX = x;
 		int nowY = y;
 		
 		//Get Current Move Index
 		int mover = 0;
-		while(mover < nowField.get(x, y).size() && !nowField.get(x, y).get(mover).equals(name))
+		while(mover < nowField.get(x, y).size() && nowField.get(x, y).get(mover).getID() != pid)
 			mover ++;
 		
 		//Current Character Location Move
@@ -48,64 +49,64 @@ public class CharacterMove {
 			switch(destType) {
 				case STAR : {
 					nowField.replace(nowX, nowY, origin);
-					return new ActionRes(nowField, moveType, Result.SCORE_NORMAL);
+					return new ActionRes(nowField, null, Result.SCORE_NORMAL);
 				}
 				case SUP_STAR : {
 					if(moveType == BlockType.MONSTER) {
 						nowField.replace(nowX, nowY, origin);
-						return new ActionRes(nowField, BlockType.MONSTER, Result.SCORE_SUPER);
+						return new ActionRes(nowField, null, Result.SCORE_SUPER);
 					} else {
 						origin.setBlockType(BlockType.SUPER_PLAYER);
 						nowField.replace(nowX, nowY, origin);
-						return new ActionRes(nowField, BlockType.SUPER_PLAYER, Result.SCORE_SUPER);
+						return new ActionRes(nowField, null, Result.SCORE_SUPER);
 					}
 						
 				}
 				case WALL : {
-					return new ActionRes(nowField, BlockType.EMPTY, Result.DEAD_HITWALL);
+					return new ActionRes(nowField, null, Result.DEAD_HITWALL);
 				}
 				case MONSTER : {
 					if(moveType == BlockType.SUPER_PLAYER) {
 						nowField.replace(nowX, nowY, origin);
-						return new ActionRes(nowField, moveType, Result.SCORE_KILLM);
+						return new ActionRes(nowField, new Pair(nowX, nowY), Result.SCORE_KILLM);
 					} else if(moveType == BlockType.MONSTER) {
 						nowField.place(nowX, nowY, origin);
-						return new ActionRes(nowField, moveType, Result.NONE);
+						return new ActionRes(nowField, null, Result.NONE);
 					} else {
-						return new ActionRes(nowField, BlockType.EMPTY, Result.DEAD_MONSTER);
+						return new ActionRes(nowField, new Pair(nowX, nowY), Result.DEAD_MONSTER);
 					}
 						
 				}
 				case PLAYER : {
 					if(moveType == BlockType.MONSTER) {
 						nowField.replace(nowX, nowY, origin);
-						return new ActionRes(nowField, moveType, Result.SCORE_KILLP);
+						return new ActionRes(nowField, new Pair(nowX, nowY), Result.SCORE_KILLP);
 					} else if(moveType == BlockType.SUPER_PLAYER) {
 						nowField.replace(nowX, nowY, origin);
-						return new ActionRes(nowField, moveType, Result.SCORE_KILLP);
+						return new ActionRes(nowField, new Pair(nowX, nowY), Result.SCORE_KILLP);
 					} else {
 						nowField.place(nowX, nowY, origin);
-						return new ActionRes(nowField, moveType, Result.NONE);
+						return new ActionRes(nowField, null, Result.NONE);
 					}
 						
 				}
 				case SUPER_PLAYER:{
 					if(moveType == BlockType.MONSTER) {
-						return new ActionRes(nowField,BlockType.EMPTY, Result.DEAD_PLAYER);
+						return new ActionRes(nowField, new Pair(nowX, nowY), Result.DEAD_PLAYER);
 					} else if(moveType == BlockType.PLAYER) {
-						return new ActionRes(nowField,BlockType.EMPTY, Result.DEAD_PLAYER);
+						return new ActionRes(nowField, new Pair(nowX, nowY), Result.DEAD_PLAYER);
 					} else {
 						nowField.place(nowX, nowY, origin);
-						return new ActionRes(nowField, moveType, Result.NONE);
+						return new ActionRes(nowField, null, Result.NONE);
 					}
 				}
 				default : {
 					nowField.replace(nowX, nowY, origin);
-					return new ActionRes(nowField, moveType, Result.NONE);
+					return new ActionRes(nowField, null, Result.NONE);
 				}
 			}
 		} else {
-			return new ActionRes(nowField, BlockType.EMPTY, Result.DEAD_OUT);
+			return new ActionRes(nowField, null, Result.DEAD_OUT);
 		}
 	}
 	

@@ -5,14 +5,26 @@ public class Player{
 	private int pScore;
 	private PStatus pstatus;
 	
+	private int superCountDown;
+	
 	public Player(String theName) {
 		this.pName = theName;
 		this.pScore = 0;
 		this.pstatus = PStatus.LIVE;
+		this.superCountDown = 0;
 	}
 	
 	public void statusSet(PStatus now) {
 		this.pstatus = now;
+		if(now == PStatus.SUPER)
+			this.superCountDown = 20;
+	}
+	
+	public void countDown() {
+		if(this.superCountDown > 0)
+			this.superCountDown = this.superCountDown - 1;
+		else if(this.superCountDown == 0)
+			this.statusSet(PStatus.LIVE);
 	}
 	
 	public void scoreSet(int change) {

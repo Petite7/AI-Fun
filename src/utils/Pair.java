@@ -17,4 +17,8 @@ public class Pair {
 		this.first = theFirst;
 		this.second = theSecond;
 	}
+	
+	public boolean equals(int theFirst, int theSecond) {
+		return (this.first == theFirst) && (this.second == theSecond);
+	}
 }

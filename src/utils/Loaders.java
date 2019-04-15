@@ -7,7 +7,6 @@ import java.net.URLClassLoader;
 
 public class Loaders {
 	
-	@SuppressWarnings("deprecation")
 	public static void load(String path) {
 
 		File jarFile = new File(path);
@@ -32,8 +31,17 @@ public class Loaders {
 	    }
 	}
 	
-	public static void main(String[] args) {
-		load("usr/PlayerModule.jar");
-	}
+//	public static void main(String[] args) {
+//		load("usr/PlayerModule.jar");
+//		try {
+//			Class<?> aClass = Class.forName("usr.PlayerModule");
+//			Object instance = aClass.newInstance();
+//			aClass.getDeclaredMethod("hello").invoke(null);
+//			aClass.getDeclaredMethod("hi").invoke(instance);
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 	
 }

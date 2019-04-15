@@ -1,16 +1,16 @@
 package game;
 
 import field.*;
-import cell.*;
+import utils.*;
 
 public class ActionRes {
 	public Field afterMove;
-	public BlockType afterAction;
+	public Pair playerInfected;
 	public Result result;
 	
-	public ActionRes(Field theField, BlockType theType, Result theResult) {
+	public ActionRes(Field theField, Pair thePlayer, Result theResult) {
 		this.afterMove = theField;
-		this.afterAction = theType;
+		this.playerInfected = thePlayer;
 		this.result = theResult;
 	}
 }

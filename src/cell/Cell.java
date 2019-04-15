@@ -5,35 +5,21 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Cell {
+	private final int playerPicTot = 2;
 	private BlockType blockType = BlockType.EMPTY ;
-	private String playerPath = null;
+	private int playerID = -1;
 	
 	public Cell() {}
 	public Cell(BlockType type) {this.blockType = type;}
 	public Cell(Cell theCell) {
-		this.blockType = theCell.blockType;
-		this.playerPath = theCell.playerPath;
-	}
-	public Cell(String path) {
-		this.blockType = BlockType.PLAYER;
-		this.playerPath = path;
+		this.blockType = theCell.getBlockType();
+		this.playerID = theCell.getID();
 	}
 	
-	public void setBlockType(BlockType type) {
-		this.blockType = type;
-	}
-	
-	public BlockType getBlockType() {
-		return this.blockType;
-	}
-	
-	public void setPath(String path) {
-		this.playerPath = path;
-	}
-	
-	public String getPath() {
-		return this.playerPath;
-	}
+	public void setBlockType(BlockType type) {this.blockType = type;}
+	public BlockType getBlockType() {return this.blockType;}
+	public void setID(int ID) {this.playerID = ID;}
+	public int getID() {return this.playerID;}
 	
 	public void draw(Graphics g, int x, int y, int size) {
 		switch(this.blockType) {
@@ -52,7 +38,7 @@ public class Cell {
 				break;
 			}
 			case PLAYER : {
-				Image img = new ImageIcon("pic/" + this.playerPath).getImage();
+				Image img = new ImageIcon("pic/pic" + ((this.playerID % this.playerPicTot) + '0') + ".jpg").getImage();
 				g.drawImage(img, x, y, size, size, null);
 				break;
 			}
