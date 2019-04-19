@@ -110,8 +110,8 @@ public class CharacterMove {
 		}
 	}
 	
-	public static void main(String[] args) {
-		Field field = new Field(2,1);
+//	public static void main(String[] args) {
+//		Field field = new Field(2,1);
 //		Cell[] movers= {new Cell(BlockType.PLAYER1),new Cell(BlockType.PLAYER2),
 //						new Cell(BlockType.SUPER_PLAYER),new Cell(BlockType.MONSTER)};
 //		
@@ -152,6 +152,6 @@ public class CharacterMove {
 //							   aRes.afterMove.get(0, 0).cellType()+" "+aRes.afterMove.get(1, 0).cellType());
 //		}
 //
-	}
+//	}
 	
 }

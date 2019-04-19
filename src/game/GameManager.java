@@ -36,12 +36,14 @@ public class GameManager {
 		this.show();
 	}
 	
+
 	public GameManager(Field theField, int numOfMonster) {
 		this.gameField = theField;
 		this.gameInit(numOfMonster);
 		this.show();
 	}
 	
+	@Deprecated	
 	public GameManager(int height, int width, int numOfMonster) {
 		this.gameField = new Field(height, width);
 		this.gameInit(numOfMonster);
@@ -74,7 +76,7 @@ public class GameManager {
 		for(Player now : this.playerGroup) {
 			Loaders.load("usr/" + now.getName() + ".jar");
 			try {
-				this.playerModules.put(now.getName(), Class.forName(now.getName().toLowerCase() + "." + now.getName() + "Action"));
+				this.playerModules.put(now.getName(), Class.forName(now.getName().toLowerCase() + "." + now.getName()));
 			} catch (ClassNotFoundException e) {
 				System.err.println("Failure when loading player module, module name : [" + now.getName() + "]");
 				e.printStackTrace();
@@ -89,8 +91,9 @@ public class GameManager {
 		
 		//Position Initialize : Players
 		for(int i = 0; i < this.playerCoordinate.size(); i++) {
-			Pair p = this.playerCoordinate.get(i);
-			p = this.getRandomCoordinate();
+			Pair p = this.getRandomCoordinate();
+			this.playerCoordinate.get(i).first = p.first;
+			this.playerCoordinate.get(i).second = p.second;
 			this.gameField.get(p.first, p.second).get(0).setBlockType(BlockType.PLAYER);
 			
 			//Set Player ID

@@ -9,6 +9,7 @@ public class Field {
 	private int height;
 	private ArrayList<Cell>[][] field;
 	
+	@SuppressWarnings("unchecked")
 	public Field(int theHeight, int theWidth) {
 		this.height = theHeight;
 		this.width = theWidth;
@@ -16,8 +17,10 @@ public class Field {
 		field = new ArrayList[this.height][this.width];
 		
 		for(int i = 0; i < this.height; i++)
-			for(int j = 0; j < this.width; j++)
+			for(int j = 0; j < this.width; j++) {
 				field[i][j] = new ArrayList<Cell>();
+				field[i][j].add(new Cell(BlockType.EMPTY));
+			}
 	}
 	
 	public Field(Field theField) {
@@ -38,7 +41,9 @@ public class Field {
 	}
 	
 	public Cell replace(int x, int y, Cell o) {
-		Cell prev = field[x][y].get(0);
+		Cell prev = null;
+		if(field[x][y].size() > 0)
+			prev = field[x][y].get(0);
 		field[x][y].clear();
 		field[x][y].add(o);
 		return prev;
@@ -55,7 +60,6 @@ public class Field {
 	public void clear() {
 		for(int i = 0; i < this.height; i++)
 			for(int j = 0; j < this.width; j++)
-				field[i][j] = null;
-		//GC Automatically collect space...
+				field[i][j].clear();
 	}
 }
