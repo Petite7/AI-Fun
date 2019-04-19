@@ -102,7 +102,9 @@ public class GameManager {
 		
 		//Position Initialize : Monster
 		for(Pair p : this.monsterCoordinate) {
-			p = this.getRandomCoordinate();
+			Pair ram = this.getRandomCoordinate();
+			p.first = ram.first;
+			p.second = ram.second;
 			this.gameField.get(p.first, p.second).get(0).setBlockType(BlockType.MONSTER);
 		}
 
