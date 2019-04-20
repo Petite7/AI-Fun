@@ -3,6 +3,7 @@ package field;
 import cell.*;
 import java.awt.Dimension;
 import java.awt.Graphics;
+
 import javax.swing.JPanel;
 
 public class View extends JPanel {
@@ -29,11 +30,11 @@ public class View extends JPanel {
 	
 	@Override
 	public Dimension getPreferredSize() {
-		return new Dimension(field.getWidth()*GRID_SIZE+1, field.getHeight()*GRID_SIZE+1);
+		return new Dimension(field.getHeight()*GRID_SIZE+1, field.getWidth()*GRID_SIZE+1);
 	}
 	
 //	public static void main(String[] args) {
-//		Field field = new Field(10,10);
+//		Field field = new Field(30,12);
 //		for ( int row = 0; row<field.getHeight(); row++ ) {
 //			for ( int col = 0; col<field.getWidth(); col++ ) {
 //				field.place(row, col, new Cell(BlockType.SUP_STAR));
