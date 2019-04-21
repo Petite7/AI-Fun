@@ -273,6 +273,8 @@ public class GameManager {
 			
 			//TODO : monster move
 			
+			this.playerCoordinate.get(i).first = infected.first;
+			this.playerCoordinate.get(i).second = infected.second;
 			this.gameField = thisMoveRes.afterMove;
 			
 		}
@@ -286,8 +288,12 @@ public class GameManager {
 	}
 	
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		GameManager gm = new GameManager("maps/map1", 3);
+		while(true) {
+			Thread.sleep(500);
+			gm.gameContinue();
+		}
 	}
 	
 }

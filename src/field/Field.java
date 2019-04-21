@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import cell.*;
 
 public class Field {
-	private int width;
 	private int height;
+	private int width;
 	private ArrayList<Cell>[][] field;
 	
 	@SuppressWarnings("unchecked")

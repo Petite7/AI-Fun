@@ -38,7 +38,7 @@ public class Cell {
 				break;
 			}
 			case PLAYER : {
-				Image img = new ImageIcon("pic/pic" + ((this.playerID % this.playerPicTot) + '0') + ".jpg").getImage();
+				Image img = new ImageIcon("pic/p" + (String.valueOf(this.playerID % this.playerPicTot)) + ".jpg").getImage();
 				g.drawImage(img, x, y, size, size, null);
 				break;
 			}
