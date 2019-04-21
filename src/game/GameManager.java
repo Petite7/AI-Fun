@@ -285,4 +285,9 @@ public class GameManager {
 		}
 	}
 	
+	
+	public static void main(String[] args) {
+		GameManager gm = new GameManager("maps/map1", 3);
+	}
+	
 }
